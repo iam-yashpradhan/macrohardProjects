@@ -1,0 +1,25 @@
+<% include header%>
+<div class="container">
+<div class="row">
+	<div class="col-md-9">
+		<h1><%= project.title %></h1>
+		<h3><%= project.description %></h2>
+		<h4 class="pull-right"><%= project.price %></h3>
+
+<% if(currentUser && project.author.id.equals(currentUser._id)) {%>
+	<a href="/projects/<%=project._id%>/edit" class="btn btn-warning btn-lg">Edit</a>
+	<form style="width: 200px" action="/projects/<%=project._id%>?_method=DELETE" method="POST">
+		<button class="btn btn-lg btn-danger">Delete</button>
+	</form>
+<%}%>
+<a class="btn btn-lg btn-primary" href="/projects/<%=project._id%>/comments/new">Add a comment</a>
+<h2>COMMENTS!!</h2>
+<% project.comments.forEach(function(comment){%>
+<h3><%= comment.text %></h3>
+<h4>Submitted by <em><%=comment.author.username%></em></h4>
+<% if(currentUser && comment.author.id.equals(currentUser._id)) {%>
+	<a class="btn btn-warning" href="/projects/<%=project._id%>/comments/<%=comment._id%>/edit">Edit</a>
+	<form style="width: 100px" action="/projects/<%=project._id%>/comments/<%=comment._id%>?_method=DELETE" method=POST><button class="btn btn-danger">Delete!</button>
+<%}})%>
+</center>
+</div>
